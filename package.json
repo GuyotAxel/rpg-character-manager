@@ -1,0 +1,24 @@
+{
+  "name": "rpg-character-manager",
+  "version": "1.0.0",
+  "description": "Learning JavaScript through a role-playing game character management system.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GuyotAxel/rpg-character-manager.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/GuyotAxel/rpg-character-manager/issues"
+  },
+  "homepage": "https://github.com/GuyotAxel/rpg-character-manager#readme"
+}

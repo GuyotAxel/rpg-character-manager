@@ -1,21 +1,22 @@
 import {
     addCharacter,
-    removeCharacter,
-    gainExperience,
-    levelUp,
-    updateCharacter
-} from `./characterManager.js`;
-import {
-    formatCharacter,
-    displayCharacters
-} from `./characterDisplay`;
+    //removeCharacter,
+    //gainExperience,
+    //levelUp,
+    //updateCharacter
+} from './characterManager.js';
+// import {
+//     formatCharacter,
+//     displayCharacters
+// } from './characterDisplay';
 
-let characters = {};
+let characters = [];
 
-addCharacter();
-removeCharacter();
-gainExperience();
-levelUp();
-updateCharacter();
-formatCharacter();
-displayCharacters();
+addCharacter(characters, "Arthas", "Warrior");
+console.log(characters);
+// removeCharacter();
+// gainExperience();
+// levelUp();
+// updateCharacter();
+// formatCharacter();
+// displayCharacters();

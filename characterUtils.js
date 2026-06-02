@@ -1,8 +1,6 @@
-export function findCharacterById()
+export function findCharacterById(characters, id)
 {
-
+    return(characters.find(character => character.id === id));
 };
-
-findCharacterById();
 //findCharacterByClass();
 //findHighLevelCharacter();
