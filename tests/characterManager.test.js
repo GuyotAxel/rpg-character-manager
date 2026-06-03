@@ -39,7 +39,7 @@ function runAddCharacter()
     test("Test for Mage hp", character2.hp, 80);
     const character3 = addCharacter(characters, "Aladdin", "Rogue");
     test("Test for Rogue hp", character3.hp, 100);
-}
+};
 
 function runAddCharacterInvalid()
 {
@@ -81,7 +81,7 @@ function runGainExperience()
     test("TEST for gainExperience", character10.experience, 400);
     gainExperience(characters, character10.id, -500);
     test("TEST Experience gain can't be negative", character10.experience >= 0, true);
-}
+};
 
 function runLevelUp()
 {
@@ -96,10 +96,34 @@ function runLevelUp()
     test("TEST for levelUp, experience is < 100", character11.experience < 100, true);
     test("TEST for levelUp, level has increased", character11.level, 5);
     test("TEST hp has increased with level up", character11.hp, 120);
-}
+};
+
+function runUpdateCharacter()
+{
+    let characters = [];
+
+    console.log("--- TEST updateCharacter ---");
+
+    const character12 = addCharacter(characters, "Arthas", "Warrior");
+    const character13 = addCharacter(characters, "Frieren", "Mage");
+    const character14 = addCharacter(characters, "Aladdin", "Rogue");
+
+    test("updateCharacter can't update id", updateCharacter(characters, character13.id, "id", 45), undefined);
+    updateCharacter(characters, character13.id, "name", "Morrigan");
+    test("updateCharacter can change name", character13.name, "Morrigan");
+    updateCharacter(characters, character13.id, "class", "Rogue");
+    test("updateCharacter can change class", character13.class, "Rogue");
+    test("update hp from class modified", character13.hp, 100);
+    updateCharacter(characters, character13.id, "level", 25);
+    test("updateCharacter can change level", character13.level, 25);
+    test("update hp from level modified", character13.hp, 340);
+    updateCharacter(characters, character13.id, "experience", 400);
+    test("updateCharacter can change experience", character13.experience, 400);
+};
 
 runAddCharacter();
 runAddCharacterInvalid();
 runRemoveCharacter();
 runGainExperience();
 runLevelUp();
+runUpdateCharacter();
