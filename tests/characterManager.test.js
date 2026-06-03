@@ -1,9 +1,9 @@
 import {
     addCharacter,
-    //removeCharacter,
-    //gainExperience,
-    //levelUp,
-    //updateCharacter
+    removeCharacter,
+    gainExperience,
+    levelUp,
+    updateCharacter
 } from "../characterManager.js";
 // import {
 //     formatCharacter,
@@ -42,19 +42,64 @@ function runAddCharacter()
 }
 
 function runAddCharacterInvalid()
-
 {
     let characters = [];
 
-    console.log("--- TEST invalid addCharacter ---")
+    console.log("--- TEST invalid addCharacter ---");
 
     const character4 = addCharacter(characters, "", "Warrior");
-    test("Test for invalid name", character4, undefined);
+    test("Test for invalid name empty", character4, undefined);
     const character5 = addCharacter(characters, "     ", "Warrior");
-    test("Test for invalid name", character5, undefined);
+    test("Test for invalid name space", character5, undefined);
     const character6 = addCharacter(characters, "Arthas", "Bard");
-    test("Test for invalid name", character6, undefined);
+    test("Test for invalid class", character6, undefined);
 };
+
+function runRemoveCharacter()
+{
+    let characters = [];
+
+    console.log("--- TEST removeCharacter ---");
+
+    const character7 = addCharacter(characters, "Arthas", "Warrior");
+    const character8 = addCharacter(characters, "Frieren", "Mage");
+    const character9 = addCharacter(characters, "Aladdin", "Rogue");
+
+    removeCharacter(characters, character8.id);
+    test("TEST for removeCharacter", characters.find(character => character.id === character8.id), undefined);
+};
+
+function runGainExperience()
+{
+    let characters = [];
+
+    console.log("--- TEST gainExperience ---");
+
+    const character10 = addCharacter(characters, "Frieren", "Mage");
+
+    gainExperience(characters, character10.id, 400);
+    test("TEST for gainExperience", character10.experience, 400);
+    gainExperience(characters, character10.id, -500);
+    test("TEST Experience gain can't be negative", character10.experience >= 0, true);
+}
+
+function runLevelUp()
+{
+    let characters = [];
+
+    console.log("--- TEST levelUp ---");
+
+    const character11 = addCharacter(characters, "Frieren", "Mage");
+
+    gainExperience(characters, character11.id, 400);
+    levelUp(characters, character11.id);
+    test("TEST for levelUp, experience is < 100", character11.experience < 100, true);
+    test("TEST for levelUp, level has increased", character11.level, 5);
+    test("TEST hp has increased with level up", character11.hp, 120);
+}
 
 runAddCharacter();
 runAddCharacterInvalid();
+runRemoveCharacter();
+runGainExperience();
+runLevelUp();

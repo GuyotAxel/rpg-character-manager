@@ -1,7 +1,7 @@
-import {
-    findCharacterById,
-    findCharacterIndex
-} from './characterUtils.js';
+export function findCharacterById(characters, id)
+{
+    return(characters.find(character => character.id === id));
+};
 
 let idCount = 0
 
@@ -43,25 +43,20 @@ export function addCharacter(characters, name, characterClass)
 
 export function removeCharacter(characters, id)
 {
-    let index = findCharacterIndex(characters, id);
-
-    if (index === undefined)
-        return(undefined);
-
-    let removedCharacter = characters[index];
-    characters.splice(index, 1);
-    return(removedCharacter);
-}
+    for (let a = 0; a < characters.length; a ++)
+    {
+        if (characters[a].id === id)
+        {
+            characters.splice(a, 1);
+            return(characters[a]);
+        }
+    }
+    return(undefined);
+};
 
 export function gainExperience(characters, id, experience)
 {
-    if (experience < 1)
-        return(undefined);
-
     let character = findCharacterById(characters, id);
-
-    if (character === undefined)
-        return(undefined);
 
     character.experience += experience;
     return(character);
@@ -70,9 +65,6 @@ export function gainExperience(characters, id, experience)
 export function levelUp(characters, id)
 {
     let character = findCharacterById(characters, id);
-
-    if (character === undefined)
-    return(undefined);
 
     while (character.experience >= 100)
     {
@@ -83,7 +75,14 @@ export function levelUp(characters, id)
     return(character);
 };
 
-export function updateCharacter()
-{
+let characters = []
 
-};
+const character7 = addCharacter(characters, "Arthas", "Warrior");
+const character8 = addCharacter(characters, "Frieren", "Mage");
+const character9 = addCharacter(characters, "Aladdin", "Rogue");
+
+gainExperience(characters, character8.id, 400);
+console.log(characters);
+
+levelUp(characters, character8.id);
+console.log(characters);
