@@ -1,22 +1,22 @@
 import {
     addCharacter,
     removeCharacter,
-    removeCharacter,
     gainExperience,
     levelUp,
     updateCharacter
 } from './characterManager.js';
-// import {
-//     formatCharacter,
-//     displayCharacters
-// } from './characterDisplay';
+import {
+    formatCharacter,
+    displayCharacters
+} from './characterDisplay.js';
 
 let characters = [];
 
-addCharacter(characters, "Arthas", "Warrior");
-console.log(characters);
-removeCharacter(characters, 1)
-console.log(characters);
+const character = addCharacter(characters, "Arthas", "Warrior");
+const character2 = addCharacter(characters, "Frieren", "Mage");
+const character3 = addCharacter(characters, "Aladdin", "Rogue");
+
+displayCharacters(characters);
 // removeCharacter();
 // gainExperience();
 // levelUp();
