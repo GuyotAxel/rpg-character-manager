@@ -5,11 +5,12 @@ import {
 
 let idCount = 0
 
-const validClasses =
+export const validClasses =
 [
     "Warrior",
     "Mage",
-    "Rogue"
+    "Rogue",
+    "all"
 ];
 
 const classHp =

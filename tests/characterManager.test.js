@@ -5,10 +5,6 @@ import {
     levelUp,
     updateCharacter
 } from "../characterManager.js";
-// import {
-//     formatCharacter,
-//     displayCharacters
-// } from '../characterDisplay';
 
 function test (message, found, target)
 {
