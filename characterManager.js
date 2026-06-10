@@ -3,15 +3,11 @@ import {
     findCharacterIndex
 } from './characterUtils.js';
 
-let idCount = 0
+import {
+    validClasses
+} from './gameData.js'
 
-export const validClasses =
-[
-    "Warrior",
-    "Mage",
-    "Rogue",
-    "all"
-];
+let idCount = 0
 
 const classHp =
 {

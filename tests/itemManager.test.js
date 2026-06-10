@@ -1,6 +1,10 @@
 import {
     addItem
-} from '../itemManager.js'
+} from '../itemManager.js';
+
+import {
+    displayItems
+} from '../itemDisplay.js';
 
 function test (message, found, target)
 {
@@ -46,3 +50,24 @@ function runAddItem()
 runInvalidAddItem();
 runAddItem();
 
+let items = [];
+
+addItem(
+    items,
+    "Iron Sword",
+    "Weapon",
+    "Warrior",
+    "attack",
+    10
+);
+
+addItem(
+    items,
+    "Leather Armor",
+    "Armor",
+    "Warrior",
+    "defense",
+    5
+);
+
+displayItems(items);

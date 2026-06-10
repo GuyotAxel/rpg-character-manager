@@ -1,22 +1,14 @@
 import {
-    validClasses
-} from './characterManager.js';
+    validClasses,
+    validType,
+    validModif
+} from './gameData.js';
+
+import {
+    findItemById
+} from './itemUtils.js';
 
 let idCountItems = 0;
-
-const validType =
-[
-    "Weapon",
-    "Armor",
-    "Consumable"
-];
-
-const validModif =
-[
-    "attack",
-    "defense",
-    "hp"
-];
 
 export function addItem(items, name, type, classRestriction, modifType, modifValue)
 {
