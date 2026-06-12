@@ -31,6 +31,11 @@ function runAddCharacter()
     test("Test for level", character.level, 1);
     test("Test for experience", character.experience, 0);
     test("Test for Warrior hp", character.hp, 120);
+    test("Test for attack", character.attack, 10);
+    test("Test for defense", character.defense, 10);
+    test("Test for inventory", character.inventory.length, 0);
+    test("Test for equipement", character.equipment.weapon, null);
+    test("Test for equipement", character.equipment.armor, null);
     const character2 = addCharacter(characters, "Frieren", "Mage");
     test("Test for Mage hp", character2.hp, 80);
     const character3 = addCharacter(characters, "Aladdin", "Rogue");

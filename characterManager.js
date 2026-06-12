@@ -9,11 +9,28 @@ import {
 
 let idCount = 0
 
-const classHp =
+const classStats =
 {
-    Warrior: 120,
-    Mage: 80,
-    Rogue: 100
+    Warrior: 
+    {
+        hp: 120,
+        attack: 10,
+        defense: 10
+    },
+    
+    Mage: 
+    {
+        hp: 80,
+        attack: 10,
+        defense: 10
+    },
+
+    Rogue: 
+    {
+        hp: 100,
+        attack: 10,
+        defense: 10
+    }
 };
 
 export function addCharacter(characters, name, characterClass)
@@ -31,7 +48,15 @@ export function addCharacter(characters, name, characterClass)
         class: characterClass,
         level: 1,
         experience: 0,
-        hp : classHp[characterClass]
+        hp: classStats[characterClass].hp,
+        attack: classStats[characterClass].attack,
+        defense: classStats[characterClass].defense,
+        inventory: [],
+        equipment:
+        {
+            weapon: null,
+            armor: null
+        }
     };
     idCount++;
     characters.push(character);
@@ -101,10 +126,10 @@ export function updateCharacter(characters, id, option, value)
         if (!validClasses.includes(value))
             return(undefined);
 
-        const hpAdded = character.hp - classHp[character.class];
+        const hpAdded = character.hp - classStats[character.class].hp;
 
         character.class = value;
-        character.hp = classHp[value] + hpAdded;
+        character.hp = classStats[value].hp + hpAdded;
         return(character);
         // dans les prochaines versions : penser à vider équipement.
     }
