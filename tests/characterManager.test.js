@@ -6,6 +6,11 @@ import {
     updateCharacter
 } from "../characterManager.js";
 
+import {
+    formatCharacter,
+    displayCharacters
+} from './characterDisplay.js';
+
 function test (message, found, target)
 {
     if (found === target)

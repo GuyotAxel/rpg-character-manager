@@ -1,3 +1,7 @@
+import { 
+    findCharacterById 
+} from './characterUtils.js';
+
 import {
     validClasses,
     validType,
@@ -37,7 +41,37 @@ export function addItem(items, name, type, classRestriction, modifType, modifVal
     return(item);
 };
 
-export function removeItem()
+export function addItemToInventory(characters, items, characterId, itemId)
 {
+    const character = findCharacterById(characters, characterId);
+    
+    if (character === undefined)
+        return(undefined);
+    if (findItemById(items, itemId) === undefined)
+        return(undefined);
 
+    character.inventory.push(itemId);
+    return(character);
+}
+
+export function removeItemFromInventory(characters, items, characterId, itemId)
+{
+    const character = findCharacterById(characters, characterId);
+    
+    if (character === undefined)
+        return(undefined);
+    if (findItemById(items, itemId) === undefined)
+        return(undefined);
+    if (!character.inventory.includes(itemId))
+        return(undefined);
+    if (character.equipment.weapon === itemId || character.equipment.armor === itemId)
+        return(undefined);
+
+    const itemIndex = 
+    character.inventory.findIndex(
+        item => item === itemId
+    );
+
+    character.inventory.splice(itemIndex, 1);
+    return(character.inventory);
 };
