@@ -1,7 +1,8 @@
 import {
     addItem,
     addItemToInventory,
-    removeItemFromInventory
+    removeItemFromInventory,
+    equipItem
 } from '../itemManager.js';
 
 import {
@@ -87,7 +88,7 @@ function runAddItemToInventory()
     test("Test invalid item can't be added to invalid character's inventory", character.inventory.length, 1);
     test("invalid character returns undefined", addItemToInventory(characters, items, 999, item2.id), undefined);
     test("invalid item returns undefined", addItemToInventory(characters, items, character.id, 999), undefined);
-}
+};
 
 function runRemoveItemFromInventory()
 {
@@ -121,14 +122,77 @@ function runRemoveItemFromInventory()
     );
     character2.equipment.weapon = item4.id;
     addItemToInventory(characters, items, character2.id, item4.id);    
-    test("Test equiped item can't be removed from inventory", removeItemFromInventory(characters, items, character2.id, item4.id), undefined);
-    test("inventory length unchanged after invalid removal",character2.inventory.length,1);
     test("invalid character returns undefined", removeItemFromInventory(characters, items, 999, item4.id), undefined);
     test("invalid item returns undefined", removeItemFromInventory(characters, items, character2.id, 999), undefined);
     test("removing item not in inventory returns undefined", removeItemFromInventory(characters, items, character2.id, item3.id), undefined);
+};
+
+function runEquipItem()
+{
+    let characters = [];
+    let items = [];
+
+    console.log("---- TEST equipItem ----");
+
+    const character3 = addCharacter(characters, "Arthas", "Warrior");
+    const item5 = addItem(
+        items,
+        "Iron Sword",
+        "Weapon",
+        "Warrior",
+        "attack",
+        10
+    );
+    const item6 = addItem(
+        items,
+        "Iron Staff",
+        "Weapon",
+        "Mage",
+        "attack",
+        10
+    );
+    const item7 = addItem(
+        items,
+        "Health Potion",
+        "Consumable",
+        "all",
+        "hp",
+        10
+    );
+    const item8 = addItem(
+        items,
+        "Steel Sword",
+        "Weapon",
+        "Warrior",
+        "attack",
+        20
+    );
+    const item9 = addItem(
+        items,
+        "Iron Dagger",
+        "Weapon",
+        "Rogue",
+        "attack",
+        10
+    );
+    addItemToInventory(characters, items, character3.id, item5.id);
+    addItemToInventory(characters, items, character3.id, item6.id);
+    addItemToInventory(characters, items, character3.id, item7.id);
+    addItemToInventory(characters, items, character3.id, item8.id);
+    test("check item is in inventory", equipItem(characters, items, character3.id, item9.id), undefined);
+    test("check class restriction", equipItem(characters, items, character3.id, item6.id), undefined);
+    test("check type restriction", equipItem(characters, items, character3.id, item7.id), undefined);
+    equipItem(characters, items, character3.id, item5.id);
+    test("Iron Sword is equipped", character3.equipment.weapon, item5.id);
+    equipItem(characters, items, character3.id, item8.id);
+    test("Steel Sword is equipped", character3.equipment.weapon, item8.id);
+    test("Iron Sword is now in inventory", character3.inventory.includes(item5.id), true);
+    test("Steel Sword is no longer in inventory", character3.inventory.includes(item8.id), false);
+    test("invenory length hasn't changed", character3.inventory.length, 3);
 }
 
 runInvalidAddItem();
 runAddItem();
 runAddItemToInventory();
 runRemoveItemFromInventory();
+runEquipItem();

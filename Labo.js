@@ -1,88 +1,42 @@
-export function findCharacterById(characters, id)
-{
-    return(characters.find(character => character.id === id));
-};
+import {
+    addItem,
+    addItemToInventory,
+    removeItemFromInventory,
+    equipItem
+} from './itemManager.js';
 
-let idCount = 0
+import {
+    displayItems
+} from './itemDisplay.js';
 
-export function addCharacter(characters, name, characterClass)
-{
-    const validClasses =
-    [
-        "Warrior",
-        "Mage",
-        "Rogue"
-    ];
+import {
+    addCharacter,
+    removeCharacter,
+    gainExperience,
+    levelUp,
+    updateCharacter
+} from './characterManager.js';
 
-    const classHp =
-    {
-        Warrior: 120,
-        Mage: 80,
-        Rogue: 100
-    };
+import {
+    formatCharacter,
+    displayCharacters
+} from './characterDisplay.js';
 
-    if (name.trim().length < 1)
-        return(undefined);
+let characters = [];
+let items = [];
 
-    if (!validClasses.includes(characterClass))
-        return(undefined);
+const character = addCharacter(characters, "Arthas", "Warrior");
 
-    const character =
-    {
-        id: idCount + 1,
-        name: name,
-        class: characterClass,
-        level: 1,
-        experience: 0,
-        hp : classHp[characterClass]
-    };
-    idCount++;
-    characters.push(character);
-    return(character);
-};
+const item = addItem(items, "Iron Sword", "Weapon", "Warrior", "attack", 10);
+const item2 = addItem(items, "Padded Armor", "Armor", "Mage", "defense", 10);
+const item3 = addItem(items, "Health Potion", "Consumable", "all", "hp", 10);
+const item4 = addItem(items, "Broken Sword", "Weapon", "Warrior", "attack", 5);
 
-export function removeCharacter(characters, id)
-{
-    for (let a = 0; a < characters.length; a ++)
-    {
-        if (characters[a].id === id)
-        {
-            characters.splice(a, 1);
-            return(characters[a]);
-        }
-    }
-    return(undefined);
-};
+addItemToInventory(characters, items, character.id, item.id);
+addItemToInventory(characters, items, character.id, item2.id);
+addItemToInventory(characters, items, character.id, item3.id);
 
-export function gainExperience(characters, id, experience)
-{
-    let character = findCharacterById(characters, id);
-
-    character.experience += experience;
-    return(character);
-};
-
-export function levelUp(characters, id)
-{
-    let character = findCharacterById(characters, id);
-
-    while (character.experience >= 100)
-    {
-        character.experience -= 100;
-        character.level++;
-        character.hp += 10;
-    };
-    return(character);
-};
-
-let characters = []
-
-const character7 = addCharacter(characters, "Arthas", "Warrior");
-const character8 = addCharacter(characters, "Frieren", "Mage");
-const character9 = addCharacter(characters, "Aladdin", "Rogue");
-
-gainExperience(characters, character8.id, 400);
-console.log(characters);
-
-levelUp(characters, character8.id);
-console.log(characters);
+character.equipment.weapon = item4.id;
+equipItem(characters, items, character.id, item.id);
+console.log(character)
+//addItem(items, name, type, classRestriction, modifType, modifValue)
