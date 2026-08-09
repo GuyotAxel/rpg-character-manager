@@ -9,7 +9,7 @@ import {
 import {
     formatCharacter,
     displayCharacters
-} from './characterDisplay.js';
+} from '../characterDisplay.js';
 
 function test (message, found, target)
 {
@@ -35,16 +35,16 @@ function runAddCharacter()
     test("Test for class", character.class, "Warrior");
     test("Test for level", character.level, 1);
     test("Test for experience", character.experience, 0);
-    test("Test for Warrior hp", character.hp, 120);
-    test("Test for attack", character.attack, 10);
-    test("Test for defense", character.defense, 10);
+    test("Test for Warrior hp", character.baseStats.hp, 120);
+    test("Test for attack", character.baseStats.attack, 10);
+    test("Test for defense", character.baseStats.defense, 10);
     test("Test for inventory", character.inventory.length, 0);
     test("Test for equipement", character.equipment.weapon, null);
     test("Test for equipement", character.equipment.armor, null);
     const character2 = addCharacter(characters, "Frieren", "Mage");
-    test("Test for Mage hp", character2.hp, 80);
+    test("Test for Mage hp", character2.baseStats.hp, 80);
     const character3 = addCharacter(characters, "Aladdin", "Rogue");
-    test("Test for Rogue hp", character3.hp, 100);
+    test("Test for Rogue hp", character3.baseStats.hp, 100);
 };
 
 function runAddCharacterInvalid()
@@ -101,7 +101,7 @@ function runLevelUp()
     levelUp(characters, character11.id);
     test("TEST for levelUp, experience is < 100", character11.experience < 100, true);
     test("TEST for levelUp, level has increased", character11.level, 5);
-    test("TEST hp has increased with level up", character11.hp, 120);
+    test("TEST hp has increased with level up", character11.baseStats.hp, 120);
 };
 
 function runUpdateCharacter()
@@ -119,10 +119,10 @@ function runUpdateCharacter()
     test("updateCharacter can change name", character13.name, "Morrigan");
     updateCharacter(characters, character13.id, "class", "Rogue");
     test("updateCharacter can change class", character13.class, "Rogue");
-    test("update hp from class modified", character13.hp, 100);
+    test("update hp from class modified", character13.baseStats.hp, 100);
     updateCharacter(characters, character13.id, "level", 25);
     test("updateCharacter can change level", character13.level, 25);
-    test("update hp from level modified", character13.hp, 340);
+    test("update hp from level modified", character13.baseStats.hp, 340);
     updateCharacter(characters, character13.id, "experience", 400);
     test("updateCharacter can change experience", character13.experience, 400);
 };

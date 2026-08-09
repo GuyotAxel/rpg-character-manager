@@ -86,10 +86,9 @@ export function equipItem(characters, items, characterId, itemId)
     if (!character.inventory.includes(itemId))
         return(undefined);
 
-    const equipmentType = Object.keys(character.equipment);
     const itemType = item.type.toLowerCase();
 
-    if (!equipmentType.includes(itemType))
+    if (!(itemType in character.equipment))
         return(undefined);
     if (item.class !== character.class && item.class !== "all")
         return(undefined);
@@ -105,5 +104,21 @@ export function equipItem(characters, items, characterId, itemId)
 
     character.equipment[itemType] = itemId;
     character.inventory.splice(itemIndex, 1);
+    return(character);
+};
+
+export function unequipItem(characters, characterID, type)
+{
+    const character = findCharacterById(characters, characterID);
+
+    if (character === undefined)
+        return(undefined);
+    if (!(type in character.equipment))
+        return(undefined);
+    if (character.equipment[type] === null)
+        return(undefined);
+
+    character.inventory.push(character.equipment[type]);
+    character.equipment[type] = null;
     return(character);
 };

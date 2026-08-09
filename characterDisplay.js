@@ -1,16 +1,46 @@
-export function formatCharacter(character)
+import { findItemById } from "./itemUtils.js";
+
+function formatEquipment(character, items)
 {
+    const keys = Object.keys(character.equipment);
+
+    const equipmentList = keys.map(key =>
+    {                    
+        if (character.equipment[key] === null)
+        {
+            return(`${key} : None`)
+        }
+        
+        return(`${key} : ${findItemById(items, character.equipment[key]).name}`)      
+    });
+
+    return(equipmentList.join("\n- "))
+};
+
+export function formatCharacter(character, items)
+{
+    const inventoryList = character.inventory.map(item => findItemById(items, item).name);
+
     return(
 `[${character.id}] ${character.name}
 
-class : ${character.class}
-level : ${character.level}
-XP : ${character.experience}
-HP : ${character.hp}`
+    class : ${character.class}
+    level : ${character.level}
+    XP : ${character.experience}
+    HP : ${character.baseStats.hp}
+
+    equipment :
+    -----------
+- ${formatEquipment(character, items)}
+    
+    inventory :
+    -----------
+- ${inventoryList.join("\n- ")}
+    `
     );
 };
 
-export function displayCharacters(characters)
+export function displayCharacters(characters, items)
 {
     if (characters.length < 1)
         return(undefined);
@@ -18,7 +48,7 @@ export function displayCharacters(characters)
     characters.forEach(
         (character, index) =>
         {
-            console.log(formatCharacter(character));
+            console.log(formatCharacter(character, items));
 
             if (index < characters.length - 1)
             {

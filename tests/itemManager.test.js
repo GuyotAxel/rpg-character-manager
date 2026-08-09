@@ -2,7 +2,8 @@ import {
     addItem,
     addItemToInventory,
     removeItemFromInventory,
-    equipItem
+    equipItem,
+    unequipItem
 } from '../itemManager.js';
 
 import {
@@ -188,7 +189,40 @@ function runEquipItem()
     test("Steel Sword is equipped", character3.equipment.weapon, item8.id);
     test("Iron Sword is now in inventory", character3.inventory.includes(item5.id), true);
     test("Steel Sword is no longer in inventory", character3.inventory.includes(item8.id), false);
-    test("invenory length hasn't changed", character3.inventory.length, 3);
+    test("inventory length hasn't changed", character3.inventory.length, 3);
+};
+
+function runUnequipItem()
+{
+    let characters = [];
+    let items = [];
+
+    console.log("---- TEST unequipItem ----");
+
+    const character4 = addCharacter(
+        characters,
+        "Arthas",
+        "Warrior"
+    );
+    const item10 = addItem(
+        items,
+        "Iron Sword",
+        "Weapon",
+        "Warrior",
+        "attack",
+        10
+    );
+
+    character4.equipment.weapon = item10.id;
+    test("Check character exists", unequipItem(characters, 99999999, "weapon"), undefined);
+    test("Type must be valid", unequipItem(characters, character4.id, "helmet"), undefined);
+    test("weapon still equipped", character4.equipment.weapon, item10.id);
+    test("Equipment slot must be occupied", unequipItem(characters, character4.id, "armor"), undefined);
+    test("Inventory size hasn't changed", character4.inventory.length, 0);
+    unequipItem(characters, character4.id, "weapon");
+    test("Weapon is unequipped", character4.equipment.weapon, null);
+    test("Previsously equipped weapon is in inventory", character4.inventory.includes(item10.id), true);
+    test("Inventory size is updated", character4.inventory.length, 1);
 }
 
 runInvalidAddItem();
@@ -196,3 +230,4 @@ runAddItem();
 runAddItemToInventory();
 runRemoveItemFromInventory();
 runEquipItem();
+runUnequipItem();

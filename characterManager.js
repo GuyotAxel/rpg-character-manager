@@ -48,9 +48,12 @@ export function addCharacter(characters, name, characterClass)
         class: characterClass,
         level: 1,
         experience: 0,
-        hp: classStats[characterClass].hp,
-        attack: classStats[characterClass].attack,
-        defense: classStats[characterClass].defense,
+        baseStats:
+        {
+            hp: classStats[characterClass].hp,
+            attack: classStats[characterClass].attack,
+            defense: classStats[characterClass].defense
+        },
         inventory: [],
         equipment:
         {
@@ -100,7 +103,7 @@ export function levelUp(characters, id)
     {
         character.experience -= 100;
         character.level++;
-        character.hp += 10;
+        character.baseStats.hp += 10;
     };
     return(character);
 };
@@ -126,10 +129,10 @@ export function updateCharacter(characters, id, option, value)
         if (!validClasses.includes(value))
             return(undefined);
 
-        const hpAdded = character.hp - classStats[character.class].hp;
+        const hpAdded = character.baseStats.hp - classStats[character.class].hp;
 
         character.class = value;
-        character.hp = classStats[value].hp + hpAdded;
+        character.baseStats.hp = classStats[value].hp + hpAdded;
         return(character);
         // dans les prochaines versions : penser à vider équipement.
     }
@@ -141,9 +144,9 @@ export function updateCharacter(characters, id, option, value)
 
         const hpGrowth = (character.level - 1) * 10;
 
-        character.hp -= hpGrowth;
+        character.baseStats.hp -= hpGrowth;
         character.level = value;
-        character.hp += (value - 1) * (10);
+        character.baseStats.hp += (value - 1) * (10);
         return(character);
     }
 
