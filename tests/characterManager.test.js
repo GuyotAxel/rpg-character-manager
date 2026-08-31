@@ -38,6 +38,7 @@ function runAddCharacter()
     test("Test for Warrior hp", character.baseStats.hp, 120);
     test("Test for attack", character.baseStats.attack, 10);
     test("Test for defense", character.baseStats.defense, 10);
+    test("Test for Warrior current hp", character.currentHp, 120);
     test("Test for inventory", character.inventory.length, 0);
     test("Test for equipement", character.equipment.weapon, null);
     test("Test for equipement", character.equipment.armor, null);

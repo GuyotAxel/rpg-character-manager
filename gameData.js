@@ -17,5 +17,30 @@ export const validModif =
 [
     "attack",
     "defense",
-    "hp"
+    "hp",
+    "heal"
 ];
+
+export const classStats =
+{
+    Warrior: 
+    {
+        hp: 120,
+        attack: 10,
+        defense: 10
+    },
+    
+    Mage: 
+    {
+        hp: 80,
+        attack: 10,
+        defense: 10
+    },
+
+    Rogue: 
+    {
+        hp: 100,
+        attack: 10,
+        defense: 10
+    }
+};

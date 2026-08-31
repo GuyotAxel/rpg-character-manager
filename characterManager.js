@@ -4,34 +4,11 @@ import {
 } from './characterUtils.js';
 
 import {
-    validClasses
+    validClasses,
+    classStats
 } from './gameData.js'
 
 let idCount = 0
-
-const classStats =
-{
-    Warrior: 
-    {
-        hp: 120,
-        attack: 10,
-        defense: 10
-    },
-    
-    Mage: 
-    {
-        hp: 80,
-        attack: 10,
-        defense: 10
-    },
-
-    Rogue: 
-    {
-        hp: 100,
-        attack: 10,
-        defense: 10
-    }
-};
 
 export function addCharacter(characters, name, characterClass)
 {
@@ -54,6 +31,7 @@ export function addCharacter(characters, name, characterClass)
             attack: classStats[characterClass].attack,
             defense: classStats[characterClass].defense
         },
+        currentHp: classStats[characterClass].hp,
         inventory: [],
         equipment:
         {

@@ -1,3 +1,4 @@
+import { getCharacterHp } from './characterStats.js';
 import { 
     findCharacterById 
 } from './characterUtils.js';
@@ -107,9 +108,9 @@ export function equipItem(characters, items, characterId, itemId)
     return(character);
 };
 
-export function unequipItem(characters, characterID, type)
+export function unequipItem(characters, characterId, type)
 {
-    const character = findCharacterById(characters, characterID);
+    const character = findCharacterById(characters, characterId);
 
     if (character === undefined)
         return(undefined);
@@ -122,3 +123,39 @@ export function unequipItem(characters, characterID, type)
     character.equipment[type] = null;
     return(character);
 };
+
+export function healCharacter(characters, items, characterId, healAmount)
+{
+    const character = findCharacterById(characters, characterId);
+    if (character === undefined)
+        return(undefined);
+    if (healAmount < 0)
+        return(undefined);
+    const maxHp = getCharacterHp(characters, items, characterId)
+    character.currentHp += healAmount;
+    if (character.currentHp > maxHp)
+        character.currentHp = maxHp;
+    return(character);
+}
+
+export function useItem(characters, items, characterId, itemId)
+{
+    const character = findCharacterById(characters, characterId);
+    if (character === undefined)
+        return(undefined);
+    const item = findItemById(items, itemId);
+    if (item === undefined)
+        return(undefined);
+    if (!character.inventory.includes(itemId))
+        return(undefined);
+    if (item.type !== "Consumable")
+        return(undefined);
+
+    const keys = Object.keys(item);
+    if (keys.includes("heal"))
+    {
+        healCharacter(characters, items, characterId, item.heal);
+    }
+    removeItemFromInventory(characters, items, characterId, itemId);
+    return(character);
+}

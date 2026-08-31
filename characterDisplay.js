@@ -27,7 +27,7 @@ export function formatCharacter(character, items)
     class : ${character.class}
     level : ${character.level}
     XP : ${character.experience}
-    HP : ${character.baseStats.hp}
+    HP : ${character.currentHp} / ${character.baseStats.hp}
 
     equipment :
     -----------

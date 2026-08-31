@@ -3,7 +3,8 @@ import {
     addItemToInventory,
     removeItemFromInventory,
     equipItem,
-    unequipItem
+    unequipItem,
+    healCharacter
 } from '../itemManager.js';
 
 import {
@@ -225,9 +226,20 @@ function runUnequipItem()
     test("Inventory size is updated", character4.inventory.length, 1);
 }
 
+function runHealCharacter()
+{
+    let characters = [];
+    let items = [];
+
+    console.log("---- TEST healCharacter ----");
+
+
+}
+
 runInvalidAddItem();
 runAddItem();
 runAddItemToInventory();
 runRemoveItemFromInventory();
 runEquipItem();
 runUnequipItem();
+//runHealCharacter();
