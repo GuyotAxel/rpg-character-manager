@@ -31,6 +31,11 @@ import {
     getCharacterStats
 } from './characterStats.js';
 
+import {
+    calculateDamage,
+    takeDamage
+} from './combatManager.js'
+
 let characters = [];
 let items = [];
 
@@ -38,34 +43,40 @@ const character = addCharacter(characters, "Arthas", "Warrior");
 const character2 = addCharacter(characters, "Frieren", "Mage");
 
 const item = addItem(items, "Iron Sword", "Weapon", "Warrior", "attack", 10);
-const item2 = addItem(items, "Padded Armor", "Armor", "Warrior", "defense", 10);
+const item2 = addItem(items, "Padded Armor", "Armor", "all", "defense", 10);
 const item3 = addItem(items, "Health Potion", "Consumable", "all", "heal", 10);
-const item4 = addItem(items, "Broken Sword", "Weapon", "Warrior", "attack", 5);
-const item5 = addItem(items, "Magic Staff", "Weapon", "Mage", "attack", 20);
+const item4 = addItem(items, "Magic Staff", "Weapon", "Mage", "attack", 20);
+const item5 = addItem(items, "Wizard Robe", "Armor", "Mage", "defense", 50);
 
 addItemToInventory(characters, items, character.id, item.id);
 addItemToInventory(characters, items, character.id, item2.id);
 addItemToInventory(characters, items, character.id, item3.id);
+addItemToInventory(characters, items, character2.id, item2.id);
+addItemToInventory(characters, items, character2.id, item3.id);
+addItemToInventory(characters, items, character2.id, item4.id);
 addItemToInventory(characters, items, character2.id, item5.id);
 
-character.equipment.weapon = item4.id;
+console.log(`\ncalculateDamage \n`)
+
+let damage = calculateDamage(characters, items, character.id, character2.id);
+console.log(damage);
 equipItem(characters, items, character.id, item.id);
-equipItem(characters, items, character.id, item2.id);
+damage = calculateDamage(characters, items, character.id, character2.id);
+console.log(damage);
+equipItem(characters, items, character2.id, item2.id);
+damage = calculateDamage(characters, items, character.id, character2.id);
+console.log(damage);
 equipItem(characters, items, character2.id, item5.id);
+damage = calculateDamage(characters, items, character.id, character2.id);
+console.log(damage);
 
-character.currentHp = 110;
-displayCharacters([character], items);
-useItem(characters, items, character.id, item3.id);
-displayCharacters([character], items);
+console.log(`\ntakeDamage \n`)
 
-addItemToInventory(characters, items, character.id, item3.id);
-character.currentHp = 120;
-displayCharacters([character], items);
-useItem(characters, items, character.id, item3.id);
-displayCharacters([character], items);
 
-addItemToInventory(characters, items, character.id, item3.id);
-character.currentHp = 80;
-displayCharacters([character], items);
-useItem(characters, items, character.id, item3.id);
-displayCharacters([character], items);
+console.log(takeDamage(characters, character.id, -80));
+takeDamage(characters, character.id, 80);
+console.log(character);
+takeDamage(characters, character.id, 80);
+console.log(character);
+
+//displayCharacters([character], items);
