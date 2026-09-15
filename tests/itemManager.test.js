@@ -4,7 +4,8 @@ import {
     removeItemFromInventory,
     equipItem,
     unequipItem,
-    healCharacter
+    healCharacter,
+    useItem
 } from '../itemManager.js';
 
 import {
@@ -23,6 +24,7 @@ import {
     formatCharacter,
     displayCharacters
 } from '../characterDisplay.js';
+
 
 function test (message, found, target)
 {
@@ -233,8 +235,69 @@ function runHealCharacter()
 
     console.log("---- TEST healCharacter ----");
 
+    const character5 = addCharacter(
+        characters,
+        "Arthas",
+        "Warrior"
+    );
 
-}
+    character5.currentHp = 20;
+
+    test("character must exists", healCharacter(characters, items, 99999, 50), undefined);
+    test("healAmount must not be negative", healCharacter(characters, items, character5.id, -50), undefined);
+    test("character is healed by the right amount", healCharacter(characters, items, character5.id, 50).currentHp, 70);
+    character5.currentHp = 100;
+    test("character us healed to full hp", healCharacter(characters, items, character5.id, 20).currentHp, 120);
+    character5.currentHp = 110;
+    test("character can't heal over max hp", healCharacter(characters, items, character5.id, 20).currentHp, 120);
+};
+
+function runUseItem()
+{
+    let characters = [];
+    let items = [];
+
+    console.log("---- TEST useItem ----");
+
+    const character6 = addCharacter(
+        characters,
+        "Arthas",
+        "Warrior"
+    );
+
+    const item11 = addItem(
+        items,
+        "Health Potion",
+        "Consumable",
+        "all",
+        "heal",
+        10
+    );
+
+    const item12 = addItem(
+        items,
+        "Iron Sword",
+        "Weapon",
+        "Warrior",
+        "attack",
+        10
+    );
+    character6.currentHp = 100;
+    
+    test("character must exists", useItem(characters, items, 9999, item11.id), undefined);
+    test("item must exists", useItem(characters, items, character6.id, 9999), undefined);
+    test("item must be in inventory", useItem(characters, items, character6.id, item11.id), undefined);
+    addItemToInventory(characters, items, character6.id, item11.id);
+    addItemToInventory(characters, items, character6.id, item12.id);
+    test("item must be useable", useItem(characters, items, character6.id, item12.id), undefined);
+    test("a health potion heals by the right amount", useItem(characters, items, character6.id, item11.id).currentHp, 110);
+    test("the consumable is removed from inventory", character6.inventory.length, 1);
+    test("health potion is removed", character6.inventory.includes(item11.id), false);
+    addItemToInventory(characters, items, character6.id, item11.id);
+    character6.currentHp = 120;
+    test("potion doesn't over heal", useItem(characters, items, character6.id, item11.id).currentHp, 120);
+    test("the new health potion is removed too", character6.inventory.includes(item11.id), false);
+};
 
 runInvalidAddItem();
 runAddItem();
@@ -242,4 +305,5 @@ runAddItemToInventory();
 runRemoveItemFromInventory();
 runEquipItem();
 runUnequipItem();
-//runHealCharacter();
+runHealCharacter();
+runUseItem();
