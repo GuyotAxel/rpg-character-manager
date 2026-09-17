@@ -60,6 +60,17 @@ export function getCharacterHp(characters, items, characterId)
     return(totalHp);
 };
 
+export function getCharacterCurrentHp(characters, characterId)
+{
+    const character = findCharacterById(characters, characterId);
+    if (character === undefined)
+        return(undefined);
+
+    const currentHp = character.currentHp;
+
+    return(currentHp);
+};
+
 export function getCharacterStats(characters, items, characterId)
 {
     const character = findCharacterById (characters, characterId);
@@ -69,6 +80,7 @@ export function getCharacterStats(characters, items, characterId)
     const totalStats =
     {
         hp: getCharacterHp(characters, items, characterId),
+        currentHp: getCharacterCurrentHp(characters, characterId),
         attack: getCharacterAttack(characters, items, characterId),
         defense: getCharacterDefense(characters, items, characterId)
     };
